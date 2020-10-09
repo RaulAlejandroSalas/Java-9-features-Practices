@@ -28,18 +28,25 @@ las estructuras de datos de manera sincrona sin embargo con el paradigma reactiv
     2- Errores 
     3- Signals (completed)
     
- ### Las aplicaciones reactivas definen 4 principios principales
+### Las aplicaciones reactivas definen 4 principios principales
     1- Responsive: 
     2- Elastic
     3- Resilient(Scalable)
     4- Message Driven
   
- ### Reactive JVM - Reactive Elements:
+### Reactive JVM - Reactive Elements:
   	1- Source Information: Publisher<T>
     2- Consumer: Subscriber<T>
     3- Subscription: Subscription
     4- Source Information both Consumer: Processor<T,R>
-    
+
+#### Publisher Interface.
+   ```java
+     public interface Publisher<T>{
+         public void subscribe(Subscriber<? super T> s);
+     }
+   
+   ``` 
     
     
     
