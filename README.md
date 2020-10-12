@@ -55,7 +55,7 @@ comenzara a recibir los datos desde el flujo.
      public interface Subscriber<T>{
         public void onSubscribe(Subscription s);
         public void onNext(T t);
-        public void onError(Throwlable t);
+        public void onError(Throwable t);
         public void onComplete();
      }
    ```
@@ -82,3 +82,90 @@ comenzara a recibir los datos desde el flujo.
 * Publisher.subscribe() puede ser llamado en cualquier momento pero desde diferentes subscriber
 * Un Subscriber debe pedir una nueva signal a traves de Subscription.request(long n) .
 
+## Functional Reactive Programming in Java
+Se combina la programacion funcional y la programacion reactiva para escribir codigo rapido claro y facil de entender
+usando lambdas y funciones puras.
+
+## Introduction to RxJava2.x (https://github.com/ReactiveX/RxJava/wiki/Getting-Started)
+Imaginamos que tenemos un flujo de touch events en el tiempo, la biblioteca RxJava provee tres estategias para realizar el consumo de estos datos:
+* **Drop**:  En este caso el flujo de datos que no se consume es eliminado inmediatamente o sea si tenemos un flujo de datos de 1,2,3,4,5... y el consumer en la primera request pide 3 elementos, entonces recibira 1,2,3. Pero si este se demora en volver a solicitar los datos entonces estos datos que se habian generado anteriormente se perderan. 
+* **Lastet**: Este caso funciona como un caching de los ultimos elementos en cada momento generados por el Publisher dando asi la posibilidad al Consumer de siempre tener los ultimos elemetos generados disponibles
+* **Buffer**:  En este caso el Consumer recibira los datos desde un buffer creado por el Publisher dando la posibilidad de no perder datos.
+
+**RxJava2.x** implementa Reactive Stream Specifications donde se pueden encontrar las siguientes analogias en cuanto a las interfaces respecto a la implementacion disponible para Java 9.
+* **Publisher<T> => Flowable<T>** (Es una implementation de Publisher<T>)
+* **Subscriber<T> => Subscriber<T>**
+* **Subscription  => Subscription**
+* **Processor<T,R>  => FlowableProcessor<T> **
+
+**RxJava** provee interfaces adicionales como es el caso de **SingleSubscriber<T>** que se emplea para subscribirse a un solo elemento:
+ 
+```java
+ interface SingleObserver<T>
+ {
+     	void onSubscribe(Disposable d);
+     	void onSuccess(T value);
+     	void onError(Throwable error)
+  }
+```
+** CompletableSubscriber** : completa o dispara un error
+ 
+ ``` java
+ interface CompletableObserver<T>
+ {
+     	void onSubscribe(Disposable d);
+     	void onComplete();
+     	void onError(Throwable error)
+  }
+   ```
+### RxJava Wrapping Para comportamiento no Reactivo
+* Flowable.fromCallable() => Retorna Flowable que cuando un subscriber se subscribe a el, este emite el valor retornado por la funcion que implememta call()
+* Observable.fromCallable()
+* Single.fromCallable()
+* Completable.fromCallable()
+* Maybe.fromCallable()
+* Flowable.fromRunnable() => Esta funcion ejecuta un objeto Runnable en cada uno de los Subscribers que se subscriben a el.
+
+## RxJava Observing Sources
+
+* Observable<T>
+
+ ``` java
+ interface Observer<T>
+ {
+     	void onSubscribe(Disposable d);
+     	void onNext(T Value)
+     	void onComplete();
+     	void onError(Throwable error)
+  }
+  ```
+     
+ ``` java
+ interface Disposable
+ {
+		 void dispose();
+ }
+ ```
+* Flowable<T>
+
+ ```java
+public interface Subscriber<T>
+ {
+     public void onSubscribe(Subscription s);
+     public void onNext(T t);
+     public void onError(Throwable t);
+     public void onComplete();
+ }
+```
+ ```java
+public interface Subscription
+{
+    public void request(long l);
+    public void cancel();
+}
+```
+
+## Operators
+Los operadores en general realizan los siguientes comportamentos
+* Transformar la salida de un Publisher
+* Retornar un Publisher luego de una modificacion
