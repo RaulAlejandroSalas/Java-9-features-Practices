@@ -81,3 +81,4 @@ comenzara a recibir los datos desde el flujo.
 * Si una Subscription es cancelada eventualmente el Publisher debe parar de enviar signals
 * Publisher.subscribe() puede ser llamado en cualquier momento pero desde diferentes subscriber
 * Un Subscriber debe pedir una nueva signal a traves de Subscription.request(long n) .
+
