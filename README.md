@@ -169,3 +169,16 @@ public interface Subscription
 Los operadores en general realizan los siguientes comportamentos
 * Transformar la salida de un Publisher
 * Retornar un Publisher luego de una modificacion
+
+## Final Project
+Se creara una un servicio web FOREX empleando el framework opensource Jersey para ello se desarrollaron los siguientes endpoints, se empleo como api de terceros fixer.io
+* GET /rates/EUR/USD
+* GET /stronger/EUR/USD
+
+El projecto fue dividido en varias fases descritas a continuacion
+* V0-Project-Setup
+* V1-Spring-Jersey-Integration
+* V2-Rates-Endopoint
+* V3-Stronger-Endpoint
+* V4-Error-Handling
+* V5-Unit-Testing

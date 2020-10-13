@@ -69,7 +69,7 @@ public class Operators {
 																	new Animal("B",4)).stream().map(Animal::getName).collect(Collectors.toList());
 		
 		//createAnimalsNameObservable(animalsName).subscribe(System.out::println);
-		createAnimalsNameObservableOperatorsUtils(animalsName);
+		createAnimalsNameObservableOperatorsUtils(animalsName).subscribe(System.out::println);
 		
 		
 		
