@@ -15,11 +15,11 @@ las estructuras de datos de manera sincrona sin embargo con el paradigma reactiv
 * RxJava 2.x: Implementada por Netflix.
 * Akka: Es un conjunto de herramientas para construir aplicaciones de alta concurrencia, distribuidas y con alta tolerancia a
     		fallos.
- * Reactive Stream: Standard.
- * Reactor: Es un Framework de Java implementado por Pivotal y construye directamente Flujos Reactivos.
- * Spring Framework 5.0: Posee caracteristicas para construir y manipular Flujos Reactivos (Netty Server).
- *  Ratpack: Conjunto de librerias sobre Netty para crear aplicaciones de alta disponibilidad sobre protocolo HTTP.
- * Akka: Es una herramienta para construir aplicaciones usando el Patron actor para Java o Scala, con la interoperabilidad de
+* Reactive Stream: Standard.
+* Reactor: Es un Framework de Java implementado por Pivotal y construye directamente Flujos Reactivos.
+* Spring Framework 5.0: Posee caracteristicas para construir y manipular Flujos Reactivos (Netty Server).
+*  Ratpack: Conjunto de librerias sobre Netty para crear aplicaciones de alta disponibilidad sobre protocolo HTTP.
+* Akka: Es una herramienta para construir aplicaciones usando el Patron actor para Java o Scala, con la interoperabilidad de
     				 Akka Streams.
     
 Basicamente los datos viajan a traves de un flujo, este flujo es conocido como source of infomation(Recurso de informacion) es 
@@ -31,12 +31,13 @@ comenzara a recibir los datos desde el flujo.
  
     
 ### Las aplicaciones reactivas definen 4 principios principales:
- * Responsive.
- * Elastic.
- * Resilient(Scalable).
- * Message Driven.
+* Responsive.
+* Elastic.
+* Resilient(Scalable).
+* Message Driven.
   
 ### Reactive JVM - Reactive Elements:
+
 * Source Information: Publisher<T>
 * Consumer: Subscriber<T>
 * Subscription: Subscription
@@ -88,11 +89,13 @@ usando lambdas y funciones puras.
 
 ## Introduction to RxJava2.x (https://github.com/ReactiveX/RxJava/wiki/Getting-Started)
 Imaginamos que tenemos un flujo de touch events en el tiempo, la biblioteca RxJava provee tres estategias para realizar el consumo de estos datos:
+
 * **Drop**:  En este caso el flujo de datos que no se consume es eliminado inmediatamente o sea si tenemos un flujo de datos de 1,2,3,4,5... y el consumer en la primera request pide 3 elementos, entonces recibira 1,2,3. Pero si este se demora en volver a solicitar los datos entonces estos datos que se habian generado anteriormente se perderan. 
 * **Lastet**: Este caso funciona como un caching de los ultimos elementos en cada momento generados por el Publisher dando asi la posibilidad al Consumer de siempre tener los ultimos elemetos generados disponibles
 * **Buffer**:  En este caso el Consumer recibira los datos desde un buffer creado por el Publisher dando la posibilidad de no perder datos.
 
-**RxJava2.x** implementa Reactive Stream Specifications donde se pueden encontrar las siguientes analogias en cuanto a las interfaces respecto a la implementacion disponible para Java 9.
+RxJava2.x implementa Reactive Stream Specifications donde se pueden encontrar las siguientes analogias en cuanto a las interfaces respecto a la implementacion disponible para Java 9:
+
 * **Publisher<T> => Flowable<T>** (Es una implementation de Publisher<T>)
 * **Subscriber<T> => Subscriber<T>**
 * **Subscription  => Subscription**
@@ -175,7 +178,8 @@ Se creara una un servicio web FOREX empleando el framework opensource Jersey par
 * GET /rates/EUR/USD
 * GET /stronger/EUR/USD
 
-El projecto fue dividido en varias fases descritas a continuacion
+El projecto fue dividido en varias fases descritas a continuacion:
+
 * V0-Project-Setup
 * V1-Spring-Jersey-Integration
 * V2-Rates-Endopoint
