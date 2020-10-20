@@ -44,6 +44,7 @@ comenzara a recibir los datos desde el flujo.
 * Source Information both Consumer: Processor<T,R>
 
 #### Publisher Interface:
+
    ```java
      public interface Publisher<T>{
          public void subscribe(Subscriber<? super T> s);
@@ -51,7 +52,8 @@ comenzara a recibir los datos desde el flujo.
    ```
        
 
-#### Subscriber Interface.
+#### Subscriber Interface:
+
    ```java
      public interface Subscriber<T>{
         public void onSubscribe(Subscription s);
@@ -62,7 +64,8 @@ comenzara a recibir los datos desde el flujo.
    ```
   
 
-#### Subscription Interface.
+#### Subscription Interface:
+
    ```java
      public interface Subscription{
         public void request(long l);
@@ -71,7 +74,8 @@ comenzara a recibir los datos desde el flujo.
    ```
 
 
-#### Consumer Interface.
+#### Consumer Interface:
+
    ```java
      public interface Processor<T,R> extends Subscriber<T>,Consumer<R>{}
    ```
@@ -111,7 +115,7 @@ RxJava2.x implementa Reactive Stream Specifications donde se pueden encontrar la
      	void onError(Throwable error)
   }
 ```
-** CompletableSubscriber** : completa o dispara un error
+** CompletableSubscriber** : completa o dispara un error:
  
  ``` java
  interface CompletableObserver<T>
@@ -131,7 +135,7 @@ RxJava2.x implementa Reactive Stream Specifications donde se pueden encontrar la
 
 ## RxJava Observing Sources
 
-* Observable<T>
+* Observable<T>:
 
  ``` java
  interface Observer<T>
@@ -149,7 +153,7 @@ RxJava2.x implementa Reactive Stream Specifications donde se pueden encontrar la
 		 void dispose();
  }
  ```
-* Flowable<T>
+* Flowable<T>:
 
  ```java
 public interface Subscriber<T>
@@ -160,6 +164,7 @@ public interface Subscriber<T>
      public void onComplete();
  }
 ```
+
  ```java
 public interface Subscription
 {
