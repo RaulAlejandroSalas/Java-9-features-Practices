@@ -12,15 +12,13 @@ las estructuras de datos de manera sincrona sin embargo con el paradigma reactiv
 * Constriuir una simple applicacion reactiva
 
 ### Existen implementaciones disponibles para java:
-* RxJava 2.x: Implementada por Netflix.
-* Akka: Es un conjunto de herramientas para construir aplicaciones de alta concurrencia, distribuidas y con alta tolerancia a
-    		fallos.
- * Reactive Stream: Standard.
- * Reactor: Es un Framework de Java implementado por Pivotal y construye directamente Flujos Reactivos.
- * Spring Framework 5.0: Posee caracteristicas para construir y manipular Flujos Reactivos (Netty Server).
- *  Ratpack: Conjunto de librerias sobre Netty para crear aplicaciones de alta disponibilidad sobre protocolo HTTP.
- * Akka: Es una herramienta para construir aplicaciones usando el Patron actor para Java o Scala, con la interoperabilidad de
-    				 Akka Streams.
+* **RxJava 2.x**: Implementada por Netflix.
+* **Akka**: Es un conjunto de herramientas para construir aplicaciones de alta concurrencia, distribuidas y con alta tolerancia a fallos.
+ * **Reactive Stream**: Standard.
+ * **Reactor**: Es un Framework de Java implementado por Pivotal y construye directamente Flujos Reactivos.
+ * **Spring Framework 5.0**: Posee caracteristicas para construir y manipular Flujos Reactivos (Netty Server).
+ * **Ratpack**: Conjunto de librerias sobre Netty para crear aplicaciones de alta disponibilidad sobre protocolo HTTP.
+ * **Akka**: Es una herramienta para construir aplicaciones usando el Patron actor para Java o Scala, con la interoperabilidad de Akka Streams.
     
 Basicamente los datos viajan a traves de un flujo, este flujo es conocido como source of infomation(Recurso de informacion) es 
 la entidad encargada de emitir los datos. La entidad encargada de procesar los datos en el flujo son los Consumers, es importante 
@@ -43,37 +41,41 @@ comenzara a recibir los datos desde el flujo.
 * Source Information both Consumer: Processor<T,R>
 
 #### Publisher Interface:
-   ```java
+
+```java
      public interface Publisher<T>{
          public void subscribe(Subscriber<? super T> s);
      }
-   ```
+```
        
 
-#### Subscriber Interface.
-   ```java
+#### Subscriber Interface:
+
+```java
      public interface Subscriber<T>{
         public void onSubscribe(Subscription s);
         public void onNext(T t);
         public void onError(Throwable t);
         public void onComplete();
      }
-   ```
+```
   
 
-#### Subscription Interface.
-   ```java
+#### Subscription Interface:
+
+```java
      public interface Subscription{
         public void request(long l);
        	 public void cancel();
      }
-   ```
+```
 
 
-#### Consumer Interface.
-   ```java
+#### Consumer Interface:
+   
+```java
      public interface Processor<T,R> extends Subscriber<T>,Consumer<R>{}
-   ```
+```
    
 ### Reglas que debe cumplir un Publisher:
 * Si el Publisher falla este debe enviar una signal de onError
@@ -96,7 +98,7 @@ Imaginamos que tenemos un flujo de touch events en el tiempo, la biblioteca RxJa
 * **Publisher<T> => Flowable<T>** (Es una implementation de Publisher<T>)
 * **Subscriber<T> => Subscriber<T>**
 * **Subscription  => Subscription**
-* **Processor<T,R>  => FlowableProcessor<T> **
+* **Processor<T,R> => FlowableProcessor<T>**
 
 **RxJava** provee interfaces adicionales como es el caso de **SingleSubscriber<T>** que se emplea para subscribirse a un solo elemento:
  
@@ -157,6 +159,8 @@ public interface Subscriber<T>
      public void onComplete();
  }
 ```
+* Subscription
+
  ```java
 public interface Subscription
 {
