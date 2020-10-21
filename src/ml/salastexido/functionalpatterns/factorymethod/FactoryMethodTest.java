@@ -9,6 +9,10 @@ public class FactoryMethodTest {
         //before Java8 implementation
         Vehicle vehicle = OldVehicleFactory.instanceOfType(VehicleType.BUS, 
                                                            VehicleColor.BALCK);
-        System.out.print(vehicle);
+        System.out.println(vehicle);
+
+        //after Java8 implementation
+        Vehicle redCar = VehicleType.CAR.factory.apply(VehicleColor.RED);
+        System.out.println(redCar);
     }
 }

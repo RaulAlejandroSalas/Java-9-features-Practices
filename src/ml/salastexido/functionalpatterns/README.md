@@ -14,4 +14,6 @@ patrones son  `factory`, `builder`, `prototype`, `the factory method`,etc.
 Estos patrones identifican caminos para componer objetos y hacer mejoras sobre estos. Los mas populares `adapter`, `bridge`,`proxy`, `decorator`,etc.
 
 ### Factory Method Pattern
-El patron factory method provee una interfaz a el cliente para crear una instancia de un objeto. Antes de la introduccion de la programacion funcional en Java este patron era implementado empleando condicionales `if`. Una buena implementacion es usando `enum`   
+El patron factory method provee una interfaz a el cliente para crear una instancia de un objeto. Antes de la introduccion de la programacion funcional en Java este patron era implementado empleando condicionales `if`. Una buena implementacion es usando `enum`.
+
+

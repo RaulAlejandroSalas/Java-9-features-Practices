@@ -7,10 +7,10 @@ public enum VehicleType {
     TRUCK(Truck::new),
     BUS(Bus::new);
 
-    public final Function<VehicleColor,Vehicle> vFunction;
+    public final Function<VehicleColor,Vehicle> factory;
 
     VehicleType(Function<VehicleColor,Vehicle> f){
-        this.vFunction = f;
+        this.factory = f;
     }
 
 
