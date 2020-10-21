@@ -135,7 +135,7 @@ RxJava2.x implementa Reactive Stream Specifications donde se pueden encontrar la
 
 * Observable<T>:
 
- ``` java
+ ```java
  interface Observer<T>
  {
      	void onSubscribe(Disposable d);
@@ -162,7 +162,8 @@ public interface Subscriber<T>
      public void onComplete();
  }
 ```
-* Subscription
+
+* Subscription: 
 
  ```java
 public interface Subscription
