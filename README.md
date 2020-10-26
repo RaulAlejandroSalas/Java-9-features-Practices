@@ -21,7 +21,7 @@ The Reactive Programming is oriented to the data flows work and the propagation 
 
 Basically the data travels on a flow, this flow is known as Source Information. this entity has the resposibility to emit the data. The entities used for processing the flow are called Consumers. If we want to keep the correct comunication between Consumers and Publisher we have to create a Subscription, inmediatly the Consumers can be received the data flows.
     
-### Las aplicaciones reactivas definen 4 principios principales:
+### Reactive Applications Principles:
 * Responsive.
 * Elastic.
 * Resilient(Scalable).
@@ -71,21 +71,24 @@ Basically the data travels on a flow, this flow is known as Source Information. 
      public interface Processor<T,R> extends Subscriber<T>,Consumer<R>{}
 ```
    
-### Reglas que debe cumplir un Publisher:
-* Si el Publisher falla este debe enviar una signal de onError
-* Si el Publisher termina correctamente en el caso de que el flujo sea finito debe enviar una signal de onComplete
-* Si una Subscription es cancelada eventualmente el Publisher debe parar de enviar signals
-* Publisher.subscribe() puede ser llamado en cualquier momento pero desde diferentes subscriber
-* Un Subscriber debe pedir una nueva signal a traves de Subscription.request(long n) .
+### Rules of the Publishers:
+* If the Publisher fail out, than this must  send a Signal onError.
+* If the Publisher has been finised correctly and in this case the Data Flow is finite, than this must send a OnComplete Signal.
+* If a Subsciption is canceled, the publisher don't send more signals.
+* Publisher.subscribe() can be called anytime but of diferent subscribers.
+* A Subscriber must ask a new signal through the Subscription using the method Subscription.request(long n) .
 
 ## Functional Reactive Programming in Java
-Se combina la programacion funcional y la programacion reactiva para escribir codigo rapido claro y facil de entender
-usando lambdas y funciones puras.
+Java uses the combination of Functional Programming and Reactive Programming to guarantee the clean code and easy read of that, using Lambdas Expresions and Pure functions.
+
 
 ## Introduction to RxJava2.x (https://github.com/ReactiveX/RxJava/wiki/Getting-Started)
-Imaginamos que tenemos un flujo de touch events en el tiempo, la biblioteca RxJava provee tres estategias para realizar el consumo de estos datos:
+We can to imaginate that we have a data flow with touch events in the time, the bibliotec RxJava privide three 
+principals strategies for the data consumed:
 
-* **Drop**:  En este caso el flujo de datos que no se consume es eliminado inmediatamente o sea si tenemos un flujo de datos de 1,2,3,4,5... y el consumer en la primera request pide 3 elementos, entonces recibira 1,2,3. Pero si este se demora en volver a solicitar los datos entonces estos datos que se habian generado anteriormente se perderan. 
+* **Drop**:  
+In this case, the data flow that has been not consumed is removed inmediately, for example, if we have the next flow 1,2,3,4,5..., in the first moment the consumer has consumed three elements then this will receive 1,2,3. But if the consumer is delayed 1 min maybe, then the data that has been generated previusly will be lost.
+
 * **Lastet**: Este caso funciona como un caching de los ultimos elementos en cada momento generados por el Publisher dando asi la posibilidad al Consumer de siempre tener los ultimos elemetos generados disponibles
 * **Buffer**:  En este caso el Consumer recibira los datos desde un buffer creado por el Publisher dando la posibilidad de no perder datos.
 
