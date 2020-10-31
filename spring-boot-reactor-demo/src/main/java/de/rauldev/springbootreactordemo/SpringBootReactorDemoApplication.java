@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import reactor.core.publisher.Flux;
 import de.rauldev.springbootreactordemo.models.User;
 import java.util.*;
+import java.util.function.BiFunction;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.core.publisher.Mono;
@@ -71,6 +72,25 @@ public class SpringBootReactorDemoApplication  implements CommandLineRunner{
 					   .flux();
 	}
 
+	public static User getUserInstance(){
+		return new User("Raul",29);
+	}
+
+	public static Flux<UserComments> getUserCommentsZipWith(){
+		Mono<User> userMono2 = Mono.fromCallable(SpringBootReactorDemoApplication::getUserInstance);
+		Mono<Comments> userCommentsMono = Mono.fromCallable(()->{
+			Comments comments = new Comments();
+			comments.addComment("Hi");
+			comments.addComment("How are you");
+			comments.addComment("Im fine");
+			return comments;
+		});
+		//public final <T2, O> Mono<O> zipWith(Mono<? extends T2> other,
+		//			BiFunction<? super T, ? super T2, ? extends O> combinator)
+		BiFunction<User,Comments,UserComments> userCommentsBiFunction = UserComments::new;
+		return userMono2.zipWith(userCommentsMono,userCommentsBiFunction).flux();
+	}
+
 	@Override
 	public void run(String ... args){
 //		Flux<User> flowString = Flux.just("Raul","Victor","Verenice","Diana")
@@ -84,7 +104,7 @@ public class SpringBootReactorDemoApplication  implements CommandLineRunner{
 //
 //		Mono<List<User>> listMono = convertFluxToMonoUser(Flux.fromIterable(users));
 //		listMono.subscribe(lisOfUsers->{ lisOfUsers.forEach(System.out::println); });
-		Flux<UserComments> userCommentsFlux = getUserComments();
+		Flux<UserComments> userCommentsFlux = getUserCommentsZipWith();
 		userCommentsFlux.doOnNext(System.out::println).subscribe();
 
 	}
