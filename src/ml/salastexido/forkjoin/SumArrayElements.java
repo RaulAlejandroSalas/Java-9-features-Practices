@@ -4,8 +4,6 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
 import java.util.stream.IntStream;
 
-import jdk.internal.jline.internal.Log;
-
 public class SumArrayElements extends RecursiveTask<Long> {
  
     private static final long serialVersionUID = 1L;
@@ -19,7 +17,7 @@ public class SumArrayElements extends RecursiveTask<Long> {
         this.array =array;
         this.lower = l;
         this.higth = h;
-        this.sum = 0;
+        this.sum = (long) 0;
     }
 
     private Long SimpleSum(){
