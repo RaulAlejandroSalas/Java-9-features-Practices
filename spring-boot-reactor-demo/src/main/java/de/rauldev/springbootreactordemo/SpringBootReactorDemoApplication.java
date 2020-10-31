@@ -9,6 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 
 import reactor.core.publisher.Flux;
 import de.rauldev.springbootreactordemo.models.User;
+
+import java.time.Duration;
 import java.util.*;
 import java.util.function.BiFunction;
 
@@ -50,6 +52,31 @@ public class SpringBootReactorDemoApplication  implements CommandLineRunner{
 				  				  .doOnNext(System.out::println);
 		userFlux.subscribe();
 
+	}
+
+	public static void exampleInterval(){
+		Flux<Integer> rangeInteger = Flux.range(0,100);
+		Flux<Long> intervals = Flux.interval(Duration.ofSeconds(2));
+		rangeInteger.zipWith(intervals,(ir,ii)->ii)
+				    .doOnNext(System.out::println)
+					.blockLast();
+	}
+
+	public static void exampleDelayElements(){
+		Flux<Integer> rangeInteger = Flux.range(0,100)
+										 .delayElements(Duration.ofSeconds(1))
+										 .doOnNext(System.out::println);
+		rangeInteger.blockLast();
+
+
+	}
+	public static void exampleFluxRange(){
+		Flux<Integer> rangeInteger = Flux.range(0,4);
+
+		Flux.just(1, 2, 3, 4,5)
+			.map(i->i*i)
+			.zipWith(rangeInteger,(a,b)->String.format("First Flow Value : [%d], SecondFlow Value: [%d]",a,b))
+			.subscribe(System.out::println);
 	}
 
 	public static void exampleIterable(){
@@ -104,9 +131,11 @@ public class SpringBootReactorDemoApplication  implements CommandLineRunner{
 //
 //		Mono<List<User>> listMono = convertFluxToMonoUser(Flux.fromIterable(users));
 //		listMono.subscribe(lisOfUsers->{ lisOfUsers.forEach(System.out::println); });
-		Flux<UserComments> userCommentsFlux = getUserCommentsZipWith();
-		userCommentsFlux.doOnNext(System.out::println).subscribe();
-
+//		Flux<UserComments> userCommentsFlux = getUserCommentsZipWith();
+//		userCommentsFlux.doOnNext(System.out::println).subscribe();
+		//exampleFluxRange();
+		//exampleInterval();
+		exampleDelayElements();
 	}
 
 
