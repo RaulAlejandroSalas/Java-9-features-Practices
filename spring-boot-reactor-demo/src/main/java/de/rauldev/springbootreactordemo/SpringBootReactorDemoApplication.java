@@ -12,6 +12,7 @@ import de.rauldev.springbootreactordemo.models.User;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
 import java.util.function.BiFunction;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -79,6 +80,17 @@ public class SpringBootReactorDemoApplication  implements CommandLineRunner{
 			.subscribe(System.out::println);
 	}
 
+	public static void exampleInfiniteInterval() throws InterruptedException {
+		CountDownLatch latch = new CountDownLatch(1);
+
+		Flux.interval(Duration.ofSeconds(1))
+			.doOnTerminate(()->latch.countDown())
+			.map(i->"Hola " + i)
+			.doOnNext(s->logger.info(s))
+			.subscribe();
+		latch.await(); //el hilo actual espera a que CountDown sea igual a 0
+	}
+
 	public static void exampleIterable(){
 		List<User> users = Arrays.asList(new User("Raul",29),new User("Diana",10), new User("Verenice",43));
 		Flux<User> userFlux = Flux.fromIterable(users)
@@ -119,7 +131,7 @@ public class SpringBootReactorDemoApplication  implements CommandLineRunner{
 	}
 
 	@Override
-	public void run(String ... args){
+	public void run(String ... args) throws InterruptedException {
 //		Flux<User> flowString = Flux.just("Raul","Victor","Verenice","Diana")
 //									  .map(User::new)
 //									  .filter(u->u.getName().startsWith("D"))
@@ -135,7 +147,8 @@ public class SpringBootReactorDemoApplication  implements CommandLineRunner{
 //		userCommentsFlux.doOnNext(System.out::println).subscribe();
 		//exampleFluxRange();
 		//exampleInterval();
-		exampleDelayElements();
+		//exampleDelayElements();
+		exampleInfiniteInterval();
 	}
 
 
