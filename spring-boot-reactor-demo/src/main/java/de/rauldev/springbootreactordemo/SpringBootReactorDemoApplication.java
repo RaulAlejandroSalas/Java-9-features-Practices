@@ -2,6 +2,8 @@ package de.rauldev.springbootreactordemo;
 
 import de.rauldev.springbootreactordemo.models.Comments;
 import de.rauldev.springbootreactordemo.models.UserComments;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +15,7 @@ import de.rauldev.springbootreactordemo.models.User;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -130,6 +133,65 @@ public class SpringBootReactorDemoApplication  implements CommandLineRunner{
 		return userMono2.zipWith(userCommentsMono,userCommentsBiFunction).flux();
 	}
 
+	public static void exampleCreateIntervalFromFluxCreate(){
+		Flux.create(emitter->{
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				private final AtomicInteger atomicInteger = new AtomicInteger();
+				@Override
+				public void run() {
+					emitter.next(atomicInteger.getAndIncrement());
+					if(atomicInteger.get()==10){
+						timer.cancel();
+						emitter.complete();
+					}
+				}
+			},1000,1000);
+		}).doOnNext(next->logger.info(next.toString()))
+		 .doOnComplete(()->System.out.println("Finished!!!"))
+		 .subscribe();
+	}
+
+	//Indicate quantity of data using backpressure
+	public static void exampleBackpressure(){
+		Flux.range(1,100)
+			.log()
+			//.subscribe(i->logger.info(i.toString()));
+			.subscribe(new Subscriber<Integer>() {
+
+				private Subscription s;
+				private Integer limit = 5;
+				private Integer count = 0;
+				@Override
+				public void onSubscribe(Subscription s) {
+					this.s = s;
+					s.request(limit);
+
+				}
+
+				@Override
+				public void onNext(Integer integer) {
+					System.out.println(integer);
+					count++;
+					if(count.equals(limit)){
+						count=0;
+						this.s.request(limit);
+					}
+				}
+
+				@Override
+				public void onError(Throwable t) {
+
+				}
+
+				@Override
+				public void onComplete() {
+					System.out.println("Finised!!!");
+				}
+			});
+
+	}
+
 	@Override
 	public void run(String ... args) throws InterruptedException {
 //		Flux<User> flowString = Flux.just("Raul","Victor","Verenice","Diana")
@@ -148,7 +210,9 @@ public class SpringBootReactorDemoApplication  implements CommandLineRunner{
 		//exampleFluxRange();
 		//exampleInterval();
 		//exampleDelayElements();
-		exampleInfiniteInterval();
+		//exampleInfiniteInterval();
+		//exampleCreateIntervalFromFluxCreate();
+		exampleBackpressure();
 	}
 
 
